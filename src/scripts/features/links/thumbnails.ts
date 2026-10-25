@@ -2,7 +2,14 @@ import { EXTENSION } from '../../defaults.ts'
 import { storage } from '../../storage.ts'
 import { tradThis } from '../../utils/translations.ts'
 import type { thumbnailMessages } from './thumbnail-messages.ts'
-import { readThumbnail, removeThumbnail, THUMBNAIL_TAB_LEFT, thumbnailSourceKey } from '../../shared/thumbnails.ts'
+import {
+    readThumbnail,
+    removeThumbnail,
+    THUMBNAIL_LOAD_TIMEOUT,
+    THUMBNAIL_NO_SCREENSHOT,
+    THUMBNAIL_TAB_LEFT,
+    thumbnailSourceKey,
+} from '../../shared/thumbnails.ts'
 import type { LinkElem } from '../../../types/shared.ts'
 
 const imageUrls = new WeakMap<HTMLImageElement, string>()
@@ -237,9 +244,9 @@ export async function displayThumbnail(
             const reason = error instanceof Error ? error.message : ''
             if (reason === THUMBNAIL_TAB_LEFT) {
                 thumbnailStatus('Could not create thumbnail. Stay on this tab until it is ready.')
-            } else if (reason.includes('took too long to load')) {
+            } else if (reason === THUMBNAIL_LOAD_TIMEOUT) {
                 thumbnailStatus('Could not create thumbnail. The website took too long to load.')
-            } else if (reason.includes('screenshot in time') || reason.includes('image readback failed')) {
+            } else if (reason === THUMBNAIL_NO_SCREENSHOT || reason.includes('image readback failed')) {
                 thumbnailStatus('Could not create thumbnail. The browser did not return a screenshot.')
             } else {
                 thumbnailStatus('Could not create thumbnail. The previous image or favicon is kept.')

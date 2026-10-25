@@ -80,7 +80,7 @@ Disabling backgrounds removes the frame and glass. Ordinary links retain their s
 
 ## Validation
 
-The current implementation passed 30 tests with 104 test steps, formatting, and type checks. Builds completed
+The current implementation passed 30 tests with 106 test steps, formatting, and type checks. Builds completed
 for Chrome, Edge, Firefox, and online. The regression suite includes clearing the cache during a pending refresh;
 an obsolete display operation cannot restore the deleted thumbnail or overwrite a newer operation's status.
 
@@ -105,11 +105,14 @@ no screenshot. The current build, with a synthetic page, x.com and fb.com, three
 screenshots with Bonjourr in a normal window and 9 of 9 maximized, in 6 to 9 seconds per request. In the maximized
 window, 5 of 9 needed the retry in front, which showed the page for about half a second. Screen recordings of the
 same flow showed the temporary window for about 0.2 seconds when it was minimized after creation and for about
-0.2 seconds when it was restored. Selecting another tab during loading stopped the capture with the expected error. Native macOS behavior, Safari extension
+0.2 seconds when it was restored. Selecting another tab during loading stopped the capture with the expected error.
+With Bonjourr in fullscreen (F11), 9 of 9 requests saved a screenshot, 5 of them with the retry in front; the window
+stayed in fullscreen and had focus again after every request. Native macOS behavior, Safari extension
 compatibility, and older browser versions remain unverified. The Firefox 109 manifest minimum has not been
 validated for this feature. Authenticated sites, CAPTCHA, and continuously navigating pages require separate checks.
 
-[Current measurements](thumbnails/validation.json) include browser results and build hashes. The screenshot uses
+[Measurements of an earlier build](thumbnails/validation.json), before the window minimizing and screenshot retry,
+include browser results and build hashes. The screenshot uses
 synthetic data in an isolated profile.
 
 ![Thumbnail setting and Icon selector](thumbnails/interface.png)

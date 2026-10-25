@@ -1,5 +1,7 @@
 import {
     resizeThumbnail,
+    THUMBNAIL_LOAD_TIMEOUT,
+    THUMBNAIL_NO_SCREENSHOT,
     THUMBNAIL_TAB_LEFT,
     thumbnailSourceKey,
     thumbnailWebsiteUrl,
@@ -83,7 +85,6 @@ async function captureThumbnail(
         if (!previousWindow.focused || selected?.id !== original.id) {
             throw new Error(THUMBNAIL_TAB_LEFT)
         }
-        // A popup may ignore the minimized state on Windows. Use a regular window without requesting focus.
         const window = await api.windows.create({ url, state: 'minimized', type: 'normal' })
         windowId = window?.id
         const tabId = window?.tabs?.[0]?.id
@@ -109,7 +110,7 @@ async function captureThumbnail(
             if (loadedAt && Date.now() - loadedAt >= 3000) break
             await new Promise((resolve) => setTimeout(resolve, 250))
         }
-        if (!loadedAt || Date.now() >= deadline) throw new Error('The website took too long to load')
+        if (!loadedAt || Date.now() >= deadline) throw new Error(THUMBNAIL_LOAD_TIMEOUT)
         thumbnailWebsiteUrl(loadedUrl)
         await captureLink(id, url)
         const previous = await api.windows.get(original.windowId)
@@ -147,7 +148,7 @@ async function captureThumbnail(
             if (readyAt && Date.now() - readyAt >= 500) break
             await new Promise((resolve) => setTimeout(resolve, 100))
         }
-        if (!readyAt || Date.now() >= renderDeadline) throw new Error('The website took too long to load')
+        if (!readyAt || Date.now() >= renderDeadline) throw new Error(THUMBNAIL_LOAD_TIMEOUT)
         thumbnailWebsiteUrl(readyUrl)
         const before = (await api.tabs.query({ windowId, active: true }))[0]
         if (before?.id !== tabId || before.url !== readyUrl || before.status !== 'complete') {
@@ -156,7 +157,9 @@ async function captureThumbnail(
         let image: string
         try {
             image = await captureVisibleWindow(windowId, 2000)
-        } catch (_) {
+        } catch (error) {
+            const message = error instanceof Error ? error.message : ''
+            if (message !== THUMBNAIL_NO_SCREENSHOT && !message.includes('image readback failed')) throw error
             const source = await api.windows.get(original.windowId)
             const selectedBeforeRetry = (await api.tabs.query({ windowId: original.windowId, active: true }))[0]
             if (!source.focused || selectedBeforeRetry?.id !== original.id) throw new Error(THUMBNAIL_TAB_LEFT)
@@ -196,7 +199,7 @@ async function captureVisibleWindow(windowId: number, timeout: number): Promise<
         return await Promise.race([
             api.tabs.captureVisibleTab(windowId, { format: 'png' }),
             new Promise<never>((_, reject) => {
-                timer = setTimeout(() => reject(new Error('The browser did not return a screenshot in time')), timeout)
+                timer = setTimeout(() => reject(new Error(THUMBNAIL_NO_SCREENSHOT)), timeout)
             }),
         ])
     } finally {

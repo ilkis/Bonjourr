@@ -138,7 +138,8 @@ globalThis.chrome = {
             }
             if (mode === 'other tab before retry') activeTab = 3
             if (mode === 'screenshot hangs' && captures === 1) return new Promise(() => {})
-            return Promise.reject(new Error('Capture readback failed'))
+            if (mode === 'capture not allowed') return Promise.reject(new Error('Cannot access contents of the page'))
+            return Promise.reject(new Error('Failed to capture tab: image readback failed'))
         },
     },
 } as unknown as typeof chrome
@@ -232,6 +233,7 @@ Deno.test('Capture restores a minimized regular window and does not steal anothe
                 'other tab before retry',
                 'screenshot hangs',
                 'created normal',
+                'capture not allowed',
             ]
         ) {
             await test.step(scenario, async () => {
@@ -255,7 +257,11 @@ Deno.test('Capture restores a minimized regular window and does not steal anothe
                 await assertRejects(
                     () => enqueueCapture('links1', currentUrl),
                     Error,
-                    left ? THUMBNAIL_TAB_LEFT : 'Capture readback failed',
+                    left
+                        ? THUMBNAIL_TAB_LEFT
+                        : mode === 'capture not allowed'
+                        ? 'Cannot access contents'
+                        : 'image readback failed',
                 )
                 if (mode === 'other tab' || mode === 'other app') {
                     assertEquals(events.slice(before), ['create', 'close'])
@@ -263,7 +269,7 @@ Deno.test('Capture restores a minimized regular window and does not steal anothe
                 } else if (mode === 'source minimized during capture') {
                     assertEquals(events.slice(before), ['create', 'restore', 'focus original', 'close'])
                     assertEquals(captures, 1)
-                } else if (left) {
+                } else if (left || mode === 'capture not allowed') {
                     assertEquals(events.slice(before), ['create', 'restore', 'close'])
                     assertEquals(captures, 1)
                 } else if (mode === 'capture still active' || mode === 'restore loses focus') {

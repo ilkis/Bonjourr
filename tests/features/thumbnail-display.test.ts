@@ -37,7 +37,14 @@ globalThis.chrome = {
 } as unknown as typeof chrome
 
 const { displayThumbnail } = await import('../../src/scripts/features/links/thumbnails.ts')
-const { writeThumbnail, readThumbnail, removeThumbnail, THUMBNAIL_TAB_LEFT } = await import(
+const {
+    writeThumbnail,
+    readThumbnail,
+    removeThumbnail,
+    THUMBNAIL_LOAD_TIMEOUT,
+    THUMBNAIL_NO_SCREENSHOT,
+    THUMBNAIL_TAB_LEFT,
+} = await import(
     '../../src/scripts/shared/thumbnails.ts'
 )
 const { tabsBc } = await import('../../src/scripts/defaults.ts')
@@ -146,6 +153,23 @@ Deno.test('Saving requests a fresh thumbnail while ordinary display uses the cac
             assertEquals(calls, 3)
             assertEquals(status.textContent, 'Could not create thumbnail. Stay on this tab until it is ready.')
             assertEquals(await shown?.text(), 'capture-returned')
+        })
+        await test.step('Known failures show their reason', async () => {
+            for (
+                const [error, message] of [
+                    [THUMBNAIL_LOAD_TIMEOUT, 'Could not create thumbnail. The website took too long to load.'],
+                    [THUMBNAIL_NO_SCREENSHOT, 'Could not create thumbnail. The browser did not return a screenshot.'],
+                    [
+                        'Failed to capture tab: image readback failed',
+                        'Could not create thumbnail. The browser did not return a screenshot.',
+                    ],
+                    ['Capture failed', 'Could not create thumbnail. The previous image or favicon is kept.'],
+                ]
+            ) {
+                chrome.runtime.sendMessage = (() => Promise.resolve({ error })) as typeof chrome.runtime.sendMessage
+                await displayThumbnail(image, link, 'favicon.png', true)
+                assertEquals(status.textContent, message)
+            }
         })
         await test.step('Clearing cache during pending refresh must keep fallback', async () => {
             let release!: () => void

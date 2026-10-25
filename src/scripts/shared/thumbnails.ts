@@ -13,6 +13,8 @@ export interface ThumbnailRecord {
 }
 
 export const THUMBNAIL_TAB_LEFT = 'The Bonjourr tab was left before the thumbnail was ready'
+export const THUMBNAIL_LOAD_TIMEOUT = 'The website took too long to load'
+export const THUMBNAIL_NO_SCREENSHOT = 'The browser did not return a screenshot in time'
 
 const DATABASE = 'bonjourr-thumbnails'
 const STORE = 'images'
