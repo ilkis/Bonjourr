@@ -461,6 +461,9 @@
     "Could not change the thumbnail capture setting": "Pikkukuvien kaappausasetusta ei voitu muuttaa",
     "Could not clear thumbnail cache": "Pikkukuvavälimuistia ei voitu tyhjentää",
     "Could not create thumbnail. The previous image or favicon is kept.": "Pikkukuvaa ei voitu luoda. Edellinen kuva tai sivuston kuvake säilytetään.",
+    "Could not create thumbnail. Stay on this tab until it is ready.": "Pikkukuvaa ei voitu luoda. Pysy tällä välilehdellä, kunnes se on valmis.",
+    "Could not create thumbnail. The website took too long to load.": "Pikkukuvaa ei voitu luoda. Sivuston latautuminen kesti liian kauan.",
+    "Could not create thumbnail. The browser did not return a screenshot.": "Pikkukuvaa ei voitu luoda. Selain ei palauttanut kuvakaappausta.",
     "Capture opens temporary website windows and may briefly take focus. It requires access to all websites. Images stay on this device and may contain signed-in content. When editing a link, select Thumbnail under Icon, then apply changes.": "Kaappaus avaa väliaikaisia sivustoikkunoita, jotka voivat hetkeksi saada kohdistuksen. Se edellyttää pääsyä kaikille verkkosivustoille. Kuvat säilyvät tällä laitteella ja voivat sisältää kirjautuneiden istuntojen tietoja. Kun muokkaat linkkiä, valitse ”Pikkukuva” kohdasta ”Kuvake” ja napsauta sitten ”Ota muutokset käyttöön”.",
     "Cannot capture this address. Use an HTTP or HTTPS URL without embedded credentials.": "Tästä osoitteesta ei voi ottaa kuvakaappausta. Käytä HTTP- tai HTTPS-osoitetta, johon ei ole sisällytetty kirjautumistietoja."
 }

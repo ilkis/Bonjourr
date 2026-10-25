@@ -461,6 +461,9 @@
     "Could not change the thumbnail capture setting": "تعذّر تغيير إعداد التقاط الصور المصغّرة",
     "Could not clear thumbnail cache": "تعذّر مسح ذاكرة الصور المصغّرة المؤقتة",
     "Could not create thumbnail. The previous image or favicon is kept.": "تعذّر إنشاء الصورة المصغّرة. تم الاحتفاظ بالصورة السابقة أو أيقونة الموقع.",
+    "Could not create thumbnail. Stay on this tab until it is ready.": "تعذّر إنشاء الصورة المصغّرة. ابقَ في علامة التبويب هذه حتى تجهز.",
+    "Could not create thumbnail. The website took too long to load.": "تعذّر إنشاء الصورة المصغّرة. استغرق تحميل الموقع وقتًا طويلًا.",
+    "Could not create thumbnail. The browser did not return a screenshot.": "تعذّر إنشاء الصورة المصغّرة. لم يُرجع المتصفح لقطة شاشة.",
     "Capture opens temporary website windows and may briefly take focus. It requires access to all websites. Images stay on this device and may contain signed-in content. When editing a link, select Thumbnail under Icon, then apply changes.": "يفتح الالتقاط نوافذ مؤقتة للمواقع وقد ينقل التركيز إليها لفترة وجيزة. يتطلب الوصول إلى جميع المواقع. تبقى الصور على هذا الجهاز وقد تتضمن محتوى من جلسات مسجّل الدخول فيها. عند تعديل رابط، اختر «صورة مصغّرة» ضمن «الأيقونة»، ثم اضغط على «تطبيق التغييرات».",
     "Cannot capture this address. Use an HTTP or HTTPS URL without embedded credentials.": "لا يمكن التقاط هذا العنوان. استخدم عنوان HTTP أو HTTPS من دون بيانات اعتماد مضمّنة."
 }

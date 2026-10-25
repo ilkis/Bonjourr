@@ -37,7 +37,9 @@ globalThis.chrome = {
 } as unknown as typeof chrome
 
 const { displayThumbnail } = await import('../../src/scripts/features/links/thumbnails.ts')
-const { writeThumbnail, readThumbnail, removeThumbnail } = await import('../../src/scripts/shared/thumbnails.ts')
+const { writeThumbnail, readThumbnail, removeThumbnail, THUMBNAIL_TAB_LEFT } = await import(
+    '../../src/scripts/shared/thumbnails.ts'
+)
 const { tabsBc } = await import('../../src/scripts/defaults.ts')
 
 Deno.test('Saving requests a fresh thumbnail while ordinary display uses the cache', async (test) => {
@@ -53,8 +55,17 @@ Deno.test('Saving requests a fresh thumbnail while ordinary display uses the cac
     URL.revokeObjectURL = () => {}
     const item = document.createElement('li')
     const image = document.createElement('img')
+    const status = document.createElement('p')
+    status.id = 'thumbnail-edit-status'
     item.append(image)
-    document.body.replaceChildren(item)
+    document.body.replaceChildren(item, status)
+    let visible = true
+    const originalHasFocus = document.hasFocus
+    Object.defineProperty(document, 'visibilityState', {
+        configurable: true,
+        get: () => visible ? 'visible' : 'hidden',
+    })
+    document.hasFocus = () => visible
     await writeThumbnail({
         id: link._id,
         url: link.url,
@@ -98,6 +109,43 @@ Deno.test('Saving requests a fresh thumbnail while ordinary display uses the cac
             assertEquals(image.dataset.thumbnail, 'true')
             assertEquals(await shown?.text(), 'capture-2')
             assertEquals(await (await readThumbnail(link._id, link.url, link.thumbnail!))?.text(), 'capture-2')
+        })
+        await test.step('Leaving the tab retries the capture when the user returns', async () => {
+            let calls = 0
+            chrome.runtime.sendMessage = (async () => {
+                calls++
+                if (calls === 1) return { error: THUMBNAIL_TAB_LEFT }
+                await writeThumbnail({
+                    id: link._id,
+                    url: link.url,
+                    source: 'capture:',
+                    image: new Blob(['capture-returned'], { type: 'image/jpeg' }),
+                    updated: 5,
+                })
+                return { ok: true }
+            }) as typeof chrome.runtime.sendMessage
+            visible = false
+            const pending = displayThumbnail(image, link, 'favicon.png', true)
+            await new Promise((resolve) => setTimeout(resolve, 50))
+            assertEquals(calls, 1)
+            assertEquals(item.getAttribute('aria-busy'), 'true')
+            visible = true
+            document.dispatchEvent(new Event('visibilitychange'))
+            await pending
+            assertEquals(calls, 2)
+            assertEquals(await shown?.text(), 'capture-returned')
+            assertEquals(item.getAttribute('aria-busy'), null)
+        })
+        await test.step('After three departures the status asks to stay on the tab', async () => {
+            let calls = 0
+            chrome.runtime.sendMessage = (() => {
+                calls++
+                return Promise.resolve({ error: THUMBNAIL_TAB_LEFT })
+            }) as typeof chrome.runtime.sendMessage
+            await displayThumbnail(image, link, 'favicon.png', true)
+            assertEquals(calls, 3)
+            assertEquals(status.textContent, 'Could not create thumbnail. Stay on this tab until it is ready.')
+            assertEquals(await shown?.text(), 'capture-returned')
         })
         await test.step('Clearing cache during pending refresh must keep fallback', async () => {
             let release!: () => void
@@ -152,6 +200,8 @@ Deno.test('Saving requests a fresh thumbnail while ordinary display uses the cac
         URL.createObjectURL = originalCreate
         URL.revokeObjectURL = originalRevoke
         globalThis.fetch = originalFetch
+        document.hasFocus = originalHasFocus
+        delete (document as { visibilityState?: string }).visibilityState
         await removeThumbnail()
         tabsBc.close()
     }

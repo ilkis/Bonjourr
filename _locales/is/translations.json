@@ -461,6 +461,9 @@
     "Could not change the thumbnail capture setting": "Ekki tókst að breyta stillingu fyrir smámyndatöku",
     "Could not clear thumbnail cache": "Ekki tókst að hreinsa skyndiminni smámynda",
     "Could not create thumbnail. The previous image or favicon is kept.": "Ekki tókst að búa til smámynd. Fyrri mynd eða tákn vefsíðunnar helst óbreytt.",
+    "Could not create thumbnail. Stay on this tab until it is ready.": "Ekki tókst að búa til smámynd. Vertu á þessum flipa þar til hún er tilbúin.",
+    "Could not create thumbnail. The website took too long to load.": "Ekki tókst að búa til smámynd. Það tók of langan tíma að hlaða vefsíðuna.",
+    "Could not create thumbnail. The browser did not return a screenshot.": "Ekki tókst að búa til smámynd. Vafrinn skilaði ekki skjámynd.",
     "Capture opens temporary website windows and may briefly take focus. It requires access to all websites. Images stay on this device and may contain signed-in content. When editing a link, select Thumbnail under Icon, then apply changes.": "Skjámyndataka opnar tímabundna glugga vefsíðna og getur tekið fókus í stutta stund. Hún krefst aðgangs að öllum vefsíðum. Myndirnar verða áfram á þessu tæki og geta innihaldið upplýsingar úr innskráðum setum. Þegar þú breytir tengli skaltu velja „Smámynd“ undir „Táknmynd“ og smella síðan á „Virkja breytingar“.",
     "Cannot capture this address. Use an HTTP or HTTPS URL without embedded credentials.": "Ekki er hægt að taka skjámynd af þessu veffangi. Notaðu HTTP- eða HTTPS-veffang án innfelldra innskráningarupplýsinga."
 }

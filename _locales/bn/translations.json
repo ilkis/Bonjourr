@@ -488,6 +488,9 @@
     "Could not change the thumbnail capture setting": "থাম্বনেইল ক্যাপচারের সেটিং পরিবর্তন করা যায়নি",
     "Could not clear thumbnail cache": "থাম্বনেইলের ক্যাশ মুছে ফেলা যায়নি",
     "Could not create thumbnail. The previous image or favicon is kept.": "থাম্বনেইল তৈরি করা যায়নি। আগের ছবি বা ওয়েবসাইটের আইকন রাখা হয়েছে।",
+    "Could not create thumbnail. Stay on this tab until it is ready.": "থাম্বনেইল তৈরি করা যায়নি। এটি তৈরি না হওয়া পর্যন্ত এই ট্যাবেই থাকুন।",
+    "Could not create thumbnail. The website took too long to load.": "থাম্বনেইল তৈরি করা যায়নি। ওয়েবসাইটটি লোড হতে অনেক বেশি সময় নিয়েছে।",
+    "Could not create thumbnail. The browser did not return a screenshot.": "থাম্বনেইল তৈরি করা যায়নি। ব্রাউজার কোনো স্ক্রিনশট ফেরত দেয়নি।",
     "Capture opens temporary website windows and may briefly take focus. It requires access to all websites. Images stay on this device and may contain signed-in content. When editing a link, select Thumbnail under Icon, then apply changes.": "ক্যাপচার করার সময় ওয়েবসাইটের অস্থায়ী উইন্ডো খোলে এবং কিছুক্ষণের জন্য ফোকাস সেখানে যেতে পারে। এর জন্য সব ওয়েবসাইটে প্রবেশাধিকার দরকার। ছবিগুলো এই ডিভাইসেই থাকে এবং তাতে লগইন করা অ্যাকাউন্টের তথ্য থাকতে পারে। লিংক সম্পাদনার সময় «আইকন»-এর অধীনে «থাম্বনেইল» বেছে নিয়ে «পরিবর্তনগুলো প্রয়োগ করুন» চাপুন।",
     "Cannot capture this address. Use an HTTP or HTTPS URL without embedded credentials.": "এই ঠিকানার ছবি তোলা যাবে না। এম্বেড করা লগইন তথ্য ছাড়া HTTP বা HTTPS ঠিকানা ব্যবহার করুন।"
 }

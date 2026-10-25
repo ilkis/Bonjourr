@@ -461,6 +461,9 @@
     "Could not change the thumbnail capture setting": "Nepodarilo sa zmeniť nastavenie vytvárania náhľadov",
     "Could not clear thumbnail cache": "Nepodarilo sa vymazať vyrovnávaciu pamäť náhľadov",
     "Could not create thumbnail. The previous image or favicon is kept.": "Nepodarilo sa vytvoriť náhľad. Predchádzajúci obrázok alebo ikona webu zostáva zachovaná.",
+    "Could not create thumbnail. Stay on this tab until it is ready.": "Nepodarilo sa vytvoriť náhľad. Zostaňte na tejto karte, kým nebude hotový.",
+    "Could not create thumbnail. The website took too long to load.": "Nepodarilo sa vytvoriť náhľad. Načítanie webu trvalo príliš dlho.",
+    "Could not create thumbnail. The browser did not return a screenshot.": "Nepodarilo sa vytvoriť náhľad. Prehliadač nevrátil snímku obrazovky.",
     "Capture opens temporary website windows and may briefly take focus. It requires access to all websites. Images stay on this device and may contain signed-in content. When editing a link, select Thumbnail under Icon, then apply changes.": "Vytváranie snímok otvára dočasné okná webov a môže na chvíľu presunúť fokus do týchto okien. Vyžaduje prístup ku všetkým webom. Obrázky zostávajú na tomto zariadení a môžu obsahovať údaje z prihlásených relácií. Pri úprave odkazu vyberte možnosť „Náhľad“ v poli „Ikona“ a kliknite na „Uložiť zmeny“.",
     "Cannot capture this address. Use an HTTP or HTTPS URL without embedded credentials.": "Z tejto adresy nie je možné vytvoriť snímku. Použite adresu HTTP alebo HTTPS bez vložených prihlasovacích údajov."
 }

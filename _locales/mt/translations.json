@@ -488,6 +488,9 @@
     "Could not change the thumbnail capture setting": "Ma setax jinbidel l-issettjar tal-qbid tal-minjaturi",
     "Could not clear thumbnail cache": "Ma setax jitħassar il-cache tal-minjaturi",
     "Could not create thumbnail. The previous image or favicon is kept.": "Ma setgħetx tinħoloq il-minjatura. Tinżamm l-immaġni ta’ qabel jew l-ikona tas-sit.",
+    "Could not create thumbnail. Stay on this tab until it is ready.": "Ma setgħetx tinħoloq il-minjatura. Ibqa’ f’din it-tab sakemm tkun lesta.",
+    "Could not create thumbnail. The website took too long to load.": "Ma setgħetx tinħoloq il-minjatura. Is-sit dam wisq biex jillowdja.",
+    "Could not create thumbnail. The browser did not return a screenshot.": "Ma setgħetx tinħoloq il-minjatura. Il-browser ma tax screenshot.",
     "Capture opens temporary website windows and may briefly take focus. It requires access to all websites. Images stay on this device and may contain signed-in content. When editing a link, select Thumbnail under Icon, then apply changes.": "Il-qbid jiftaħ twieqi temporanji tas-siti web u jista’ jieħu l-fokus għal ftit ħin. Jeħtieġ aċċess għas-siti web kollha. L-immaġnijiet jibqgħu fuq dan l-apparat u jistgħu jinkludu informazzjoni minn sessjonijiet illoggjati. Meta teditja link, agħżel «Minjatura» taħt «Ikona», imbagħad ikklikkja «Applika l-bidliet».",
     "Cannot capture this address. Use an HTTP or HTTPS URL without embedded credentials.": "Ma tistax tinqabad immaġni minn dan l-indirizz. Uża URL HTTP jew HTTPS mingħajr kredenzjali inkorporati."
 }

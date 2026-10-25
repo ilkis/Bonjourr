@@ -1,4 +1,10 @@
-import { resizeThumbnail, thumbnailSourceKey, thumbnailWebsiteUrl, writeThumbnail } from '../shared/thumbnails.ts'
+import {
+    resizeThumbnail,
+    THUMBNAIL_TAB_LEFT,
+    thumbnailSourceKey,
+    thumbnailWebsiteUrl,
+    writeThumbnail,
+} from '../shared/thumbnails.ts'
 import type { LinkElem } from '../../types/shared.ts'
 
 const api = (globalThis.browser ?? globalThis.chrome) as unknown as typeof chrome
@@ -75,13 +81,19 @@ async function captureThumbnail(
     try {
         const selected = (await api.tabs.query({ windowId: original.windowId, active: true }))[0]
         if (!previousWindow.focused || selected?.id !== original.id) {
-            throw new Error('The capture tab changed before opening the website')
+            throw new Error(THUMBNAIL_TAB_LEFT)
         }
         // A popup may ignore the minimized state on Windows. Use a regular window without requesting focus.
         const window = await api.windows.create({ url, state: 'minimized', type: 'normal' })
         windowId = window?.id
         const tabId = window?.tabs?.[0]?.id
         if (windowId === undefined || tabId === undefined) throw new Error('Cannot create capture window')
+        if (window?.state !== 'minimized' || window.focused) {
+            await api.windows.update(windowId, { state: 'minimized' })
+            if (!(await api.windows.get(original.windowId)).focused) {
+                await api.windows.update(original.windowId, { focused: true })
+            }
+        }
         await api.tabs.update(tabId, { muted: true })
         const deadline = Date.now() + 45000
         let loadedAt = 0
@@ -104,7 +116,7 @@ async function captureThumbnail(
         const selectedBeforeRestore = (await api.tabs.query({ windowId: original.windowId, active: true }))[0]
         // Do not restore a capture window over another application or a tab the user selected while loading.
         if (!previous.focused || selectedBeforeRestore?.id !== original.id) {
-            throw new Error('The capture tab changed while the website was loading')
+            throw new Error(THUMBNAIL_TAB_LEFT)
         }
         if (generation !== queueGeneration) throw new Error('Thumbnail capture was cancelled')
         // Keep the loaded viewport: resizing during restoration can stall readback on complex websites.
@@ -141,7 +153,21 @@ async function captureThumbnail(
         if (before?.id !== tabId || before.url !== readyUrl || before.status !== 'complete') {
             throw new Error('The capture tab changed before taking the screenshot')
         }
-        const image = await captureVisibleWindow(windowId)
+        let image: string
+        try {
+            image = await captureVisibleWindow(windowId, 2000)
+        } catch (_) {
+            const source = await api.windows.get(original.windowId)
+            const selectedBeforeRetry = (await api.tabs.query({ windowId: original.windowId, active: true }))[0]
+            if (!source.focused || selectedBeforeRetry?.id !== original.id) throw new Error(THUMBNAIL_TAB_LEFT)
+            if (generation !== queueGeneration) throw new Error('Thumbnail capture was cancelled')
+            await api.windows.update(windowId, { focused: true })
+            await new Promise((resolve) => setTimeout(resolve, 500))
+            image = await captureVisibleWindow(windowId, 10000)
+            if ((await api.windows.get(windowId)).focused) {
+                await api.windows.update(original.windowId, { focused: true })
+            }
+        }
         const after = (await api.tabs.query({ windowId, active: true }))[0]
         if (after?.id !== tabId || after.url !== readyUrl || after.status !== 'complete') {
             throw new Error('The capture tab changed while taking the screenshot')
@@ -164,13 +190,13 @@ async function captureThumbnail(
     }
 }
 
-async function captureVisibleWindow(windowId: number): Promise<string> {
+async function captureVisibleWindow(windowId: number, timeout: number): Promise<string> {
     let timer: ReturnType<typeof setTimeout> | undefined
     try {
         return await Promise.race([
             api.tabs.captureVisibleTab(windowId, { format: 'png' }),
             new Promise<never>((_, reject) => {
-                timer = setTimeout(() => reject(new Error('The browser did not return a screenshot in time')), 10000)
+                timer = setTimeout(() => reject(new Error('The browser did not return a screenshot in time')), timeout)
             }),
         ])
     } finally {

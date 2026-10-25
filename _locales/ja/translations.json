@@ -461,6 +461,9 @@
     "Could not change the thumbnail capture setting": "サムネイルキャプチャの設定を変更できませんでした",
     "Could not clear thumbnail cache": "サムネイルのキャッシュを消去できませんでした",
     "Could not create thumbnail. The previous image or favicon is kept.": "サムネイルを作成できませんでした。以前の画像またはサイトアイコンを引き続き使用します。",
+    "Could not create thumbnail. Stay on this tab until it is ready.": "サムネイルを作成できませんでした。完成するまでこのタブを開いたままにしてください。",
+    "Could not create thumbnail. The website took too long to load.": "サムネイルを作成できませんでした。サイトの読み込みに時間がかかりすぎました。",
+    "Could not create thumbnail. The browser did not return a screenshot.": "サムネイルを作成できませんでした。ブラウザーからスクリーンショットが返されませんでした。",
     "Capture opens temporary website windows and may briefly take focus. It requires access to all websites. Images stay on this device and may contain signed-in content. When editing a link, select Thumbnail under Icon, then apply changes.": "キャプチャ時はウェブサイトの一時ウィンドウが開き、短時間フォーカスが移ることがあります。すべてのウェブサイトへのアクセス権限が必要です。画像はこの端末に保存され、ログイン中のアカウントの情報が含まれる場合があります。リンクの編集時に「アイコン」で「サムネイル」を選択し、「適用する」をクリックしてください。",
     "Cannot capture this address. Use an HTTP or HTTPS URL without embedded credentials.": "このアドレスはキャプチャできません。認証情報を含まないHTTPまたはHTTPSのURLを使用してください。"
 }

@@ -461,6 +461,9 @@
     "Could not change the thumbnail capture setting": "No s’ha pogut canviar la configuració de captura de miniatures",
     "Could not clear thumbnail cache": "No s’ha pogut buidar la memòria cau de miniatures",
     "Could not create thumbnail. The previous image or favicon is kept.": "No s’ha pogut crear la miniatura. Es conserva la imatge anterior o la icona del lloc web.",
+    "Could not create thumbnail. Stay on this tab until it is ready.": "No s’ha pogut crear la miniatura. Queda’t en aquesta pestanya fins que estigui llesta.",
+    "Could not create thumbnail. The website took too long to load.": "No s’ha pogut crear la miniatura. El lloc web ha trigat massa a carregar-se.",
+    "Could not create thumbnail. The browser did not return a screenshot.": "No s’ha pogut crear la miniatura. El navegador no ha retornat cap captura de pantalla.",
     "Capture opens temporary website windows and may briefly take focus. It requires access to all websites. Images stay on this device and may contain signed-in content. When editing a link, select Thumbnail under Icon, then apply changes.": "La captura obre finestres temporals dels llocs web i pot prendre el focus breument. Requereix accés a tots els llocs web. Les imatges es queden en aquest dispositiu i poden contenir informació de sessions iniciades. En editar un enllaç, selecciona «Miniatura» a «Icona» i prem «Aplicar canvis».",
     "Cannot capture this address. Use an HTTP or HTTPS URL without embedded credentials.": "No es pot capturar aquesta adreça. Fes servir una adreça HTTP o HTTPS sense credencials incrustades."
 }

@@ -1,4 +1,5 @@
 import { assertEquals, assertRejects } from '@std/assert'
+import { THUMBNAIL_TAB_LEFT } from '../../src/scripts/shared/thumbnails.ts'
 
 const events: string[] = []
 let granted = true
@@ -59,14 +60,25 @@ globalThis.chrome = {
         create: (options: chrome.windows.CreateData) => {
             assertEquals(options, { url: currentUrl, state: 'minimized', type: 'normal' })
             createCount++
-            captureState = 'minimized'
-            captureFocused = false
+            captureState = mode === 'created normal' ? 'normal' : 'minimized'
+            captureFocused = mode === 'created normal'
+            if (mode === 'created normal') windowFocused = false
             captureClosed = false
             events.push('create')
-            return Promise.resolve({ id: 20, tabs: [tab(2)] })
+            return Promise.resolve({ id: 20, tabs: [tab(2)], state: captureState, focused: captureFocused })
         },
         update: (id: number, options: chrome.windows.UpdateInfo) => {
-            if (id === 20) {
+            if (id === 20 && options.state === 'minimized') {
+                assertEquals(options, { state: 'minimized' })
+                events.push('minimize')
+                captureState = 'minimized'
+                captureFocused = false
+            } else if (id === 20 && !options.state) {
+                assertEquals(options, { focused: true })
+                events.push('raise')
+                captureFocused = true
+                windowFocused = false
+            } else if (id === 20) {
                 assertEquals(options, {
                     state: 'normal',
                     focused: false,
@@ -120,7 +132,12 @@ globalThis.chrome = {
                 windowFocused = false
                 captureFocused = false
             }
-            if (mode === 'source minimized during capture') sourceState = 'minimized'
+            if (mode === 'source minimized during capture') {
+                sourceState = 'minimized'
+                windowFocused = false
+            }
+            if (mode === 'other tab before retry') activeTab = 3
+            if (mode === 'screenshot hangs' && captures === 1) return new Promise(() => {})
             return Promise.reject(new Error('Capture readback failed'))
         },
     },
@@ -212,6 +229,9 @@ Deno.test('Capture restores a minimized regular window and does not steal anothe
                 'capture still active',
                 'another window during capture',
                 'source minimized during capture',
+                'other tab before retry',
+                'screenshot hangs',
+                'created normal',
             ]
         ) {
             await test.step(scenario, async () => {
@@ -224,25 +244,57 @@ Deno.test('Capture restores a minimized regular window and does not steal anothe
                 captures = 0
                 restoredReads = 0
                 const before = events.length
+                const left = [
+                    'other tab',
+                    'other app',
+                    'other window during restore',
+                    'another window during capture',
+                    'source minimized during capture',
+                    'other tab before retry',
+                ].includes(mode)
                 await assertRejects(
                     () => enqueueCapture('links1', currentUrl),
                     Error,
-                    mode === 'other tab' || mode === 'other app' ? 'capture tab changed' : 'Capture readback failed',
+                    left ? THUMBNAIL_TAB_LEFT : 'Capture readback failed',
                 )
                 if (mode === 'other tab' || mode === 'other app') {
                     assertEquals(events.slice(before), ['create', 'close'])
                     assertEquals(captures, 0)
-                } else if (
-                    mode === 'capture still active' || mode === 'restore loses focus' ||
-                    mode === 'source minimized during capture'
-                ) {
+                } else if (mode === 'source minimized during capture') {
                     assertEquals(events.slice(before), ['create', 'restore', 'focus original', 'close'])
-                    assertEquals(windowFocused, true)
-                } else {
+                    assertEquals(captures, 1)
+                } else if (left) {
                     assertEquals(events.slice(before), ['create', 'restore', 'close'])
                     assertEquals(captures, 1)
+                } else if (mode === 'capture still active' || mode === 'restore loses focus') {
+                    assertEquals(events.slice(before), [
+                        'create',
+                        'restore',
+                        'focus original',
+                        'raise',
+                        'focus original',
+                        'close',
+                    ])
+                    assertEquals(captures, 2)
+                    assertEquals(windowFocused, true)
+                } else if (mode === 'created normal') {
+                    assertEquals(events.slice(before), [
+                        'create',
+                        'minimize',
+                        'focus original',
+                        'restore',
+                        'raise',
+                        'focus original',
+                        'close',
+                    ])
+                    assertEquals(captures, 2)
+                    assertEquals(windowFocused, true)
+                } else {
+                    assertEquals(events.slice(before), ['create', 'restore', 'raise', 'focus original', 'close'])
+                    assertEquals(captures, 2)
+                    assertEquals(windowFocused, true)
                 }
-                assertEquals(activeTab, mode === 'other tab' ? 3 : 1)
+                assertEquals(activeTab, mode === 'other tab' || mode === 'other tab before retry' ? 3 : 1)
             })
         }
     } finally {

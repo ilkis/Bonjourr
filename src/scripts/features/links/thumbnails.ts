@@ -2,7 +2,7 @@ import { EXTENSION } from '../../defaults.ts'
 import { storage } from '../../storage.ts'
 import { tradThis } from '../../utils/translations.ts'
 import type { thumbnailMessages } from './thumbnail-messages.ts'
-import { readThumbnail, removeThumbnail, thumbnailSourceKey } from '../../shared/thumbnails.ts'
+import { readThumbnail, removeThumbnail, THUMBNAIL_TAB_LEFT, thumbnailSourceKey } from '../../shared/thumbnails.ts'
 import type { LinkElem } from '../../../types/shared.ts'
 
 const imageUrls = new WeakMap<HTMLImageElement, string>()
@@ -219,13 +219,31 @@ export async function displayThumbnail(
             if (imageUpdates.get(image) !== update || !image.isConnected) return
             if (!local.thumbnailCaptureEnabled || EXTENSION.extension.inIncognitoContext) return
             image.closest('li')?.setAttribute('aria-busy', 'true')
-            await refreshThumbnail(link)
+            for (let attempt = 1;; attempt++) {
+                try {
+                    await refreshThumbnail(link)
+                    break
+                } catch (error) {
+                    if (attempt === 3 || !(error instanceof Error) || error.message !== THUMBNAIL_TAB_LEFT) throw error
+                    await tabReturned()
+                    if (imageUpdates.get(image) !== update || !image.isConnected) return
+                }
+            }
             blob = await readThumbnail(link._id, link.url, source)
         }
     } catch (error) {
         if (imageUpdates.get(image) === update && image.isConnected && image.dataset.thumbnailKey === key) {
             console.warn('Thumbnail capture failed', error)
-            thumbnailStatus('Could not create thumbnail. The previous image or favicon is kept.')
+            const reason = error instanceof Error ? error.message : ''
+            if (reason === THUMBNAIL_TAB_LEFT) {
+                thumbnailStatus('Could not create thumbnail. Stay on this tab until it is ready.')
+            } else if (reason.includes('took too long to load')) {
+                thumbnailStatus('Could not create thumbnail. The website took too long to load.')
+            } else if (reason.includes('screenshot in time') || reason.includes('image readback failed')) {
+                thumbnailStatus('Could not create thumbnail. The browser did not return a screenshot.')
+            } else {
+                thumbnailStatus('Could not create thumbnail. The previous image or favicon is kept.')
+            }
         }
     } finally {
         const current = imageUpdates.get(image) === update && image.isConnected && image.dataset.thumbnailKey === key
@@ -239,6 +257,20 @@ export async function displayThumbnail(
         }
         if (current) image.closest('li')?.removeAttribute('aria-busy')
     }
+}
+
+function tabReturned(): Promise<void> {
+    return new Promise((resolve) => {
+        const check = () => {
+            if (document.visibilityState !== 'visible' || !document.hasFocus()) return
+            document.removeEventListener('visibilitychange', check)
+            globalThis.removeEventListener('focus', check)
+            resolve()
+        }
+        document.addEventListener('visibilitychange', check)
+        globalThis.addEventListener('focus', check)
+        check()
+    })
 }
 
 async function refreshThumbnail(link: LinkElem): Promise<void> {

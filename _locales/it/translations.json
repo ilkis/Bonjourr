@@ -461,6 +461,9 @@
     "Could not change the thumbnail capture setting": "Impossibile modificare l’impostazione di acquisizione delle miniature",
     "Could not clear thumbnail cache": "Impossibile svuotare la cache delle miniature",
     "Could not create thumbnail. The previous image or favicon is kept.": "Impossibile creare la miniatura. L’immagine precedente o l’icona del sito viene mantenuta.",
+    "Could not create thumbnail. Stay on this tab until it is ready.": "Impossibile creare la miniatura. Resta su questa scheda finché non è pronta.",
+    "Could not create thumbnail. The website took too long to load.": "Impossibile creare la miniatura. Il caricamento del sito ha richiesto troppo tempo.",
+    "Could not create thumbnail. The browser did not return a screenshot.": "Impossibile creare la miniatura. Il browser non ha restituito alcuno screenshot.",
     "Capture opens temporary website windows and may briefly take focus. It requires access to all websites. Images stay on this device and may contain signed-in content. When editing a link, select Thumbnail under Icon, then apply changes.": "L’acquisizione apre finestre temporanee dei siti web e può portarle brevemente in primo piano. Richiede l’accesso a tutti i siti web. Le immagini rimangono su questo dispositivo e possono contenere dati di sessioni con accesso effettuato. Quando modifichi un collegamento, seleziona «Miniatura» in «Icona», quindi fai clic su «Applica modifiche».",
     "Cannot capture this address. Use an HTTP or HTTPS URL without embedded credentials.": "Impossibile acquisire questo indirizzo. Usa un URL HTTP o HTTPS senza credenziali incorporate."
 }

@@ -26,9 +26,15 @@ that the user already granted earlier.
 
 Capture uses a temporary regular browser window. The background script serializes
 capture requests and deduplicates requests for the same link and URL. It checks the saved source, permission,
-and requesting tab before opening the website in a minimized window. After loading settles for three seconds,
-it checks the saved link and requesting tab again. If the user selected another tab or left the original window,
-capture stops before restoring the temporary window.
+and requesting tab before opening the website in a minimized window. Chrome can ignore the minimized state and
+create a normal, focused window instead; the script then minimizes it at once and returns focus to the Bonjourr
+window. Without this, the focus check below cancelled every capture in such a browser. After loading settles for
+three seconds, it checks the saved link and requesting tab again. If the user selected another tab or left the
+original window, capture stops before restoring the temporary window.
+
+When capture stops because the user left, the Bonjourr page waits until its tab is visible and focused again and
+then retries. It gives up after three attempts. Other failures show a specific reason when one is known: the website
+took too long to load, or the browser did not return a screenshot.
 
 The script restores the window with `focused: false`, preserving the browser-selected size and position. Changing
 the viewport during restoration could leave screenshot readback pending on complex pages such as `x.com`.
@@ -39,6 +45,12 @@ another focused browser window. After 500 ms for painting, it allows a reload or
 to settle in the background, then verifies the active capture tab and URL, captures
 with `tabs.captureVisibleTab`, and resizes the image. Cleanup closes only the temporary window; if that window
 still owns focus, it transfers focus before closing it. The original Bonjourr tab is never replaced by a website.
+
+Chrome on Windows does not paint a window that other windows fully cover, such as a maximized Bonjourr window.
+The screenshot then fails with `image readback failed` or never returns. A working screenshot returns within
+milliseconds, so the first attempt waits at most two seconds. If it fails and the Bonjourr tab is still selected
+and focused, the script brings the capture window in front once, waits 500 ms, and tries again for up to ten
+seconds. Focus returns to the Bonjourr window right after that screenshot.
 
 This is an experimental window flow, not an invisible capture API. A temporary window can briefly appear or
 activate. The settings warning describes this behavior in all supported languages. A failed or interrupted capture keeps the previous image.
@@ -53,6 +65,9 @@ A screenshot is requested only by **Apply changes** in the link editor,
 with capture enabled. Failed attempts are not retried on each new tab. A successful capture notifies other open
 Bonjourr tabs to reload the locally cached image. There is no periodic refresh or background crawling of saved links.
 
+Quick Links updates that change nothing skip the sync storage write. Applying unchanged link settings still
+refreshes the Thumbnail. The icon radius slider saves only the radius, once it stops moving for 400 ms.
+
 Screenshots use the browser's regular session and may contain signed-in information. Private-tab capture is
 rejected. The online build retains its ordinary favicon, file and URL icon functionality.
 Local screenshot capture is unavailable in the online build.
@@ -65,7 +80,7 @@ Disabling backgrounds removes the frame and glass. Ordinary links retain their s
 
 ## Validation
 
-The current implementation passed 29 tests with 93 test steps, formatting, and type checks. Builds completed
+The current implementation passed 30 tests with 104 test steps, formatting, and type checks. Builds completed
 for Chrome, Edge, Firefox, and online. The regression suite includes clearing the cache during a pending refresh;
 an obsolete display operation cannot restore the deleted thumbnail or overwrite a newer operation's status.
 
@@ -84,7 +99,13 @@ status dismissal, and JPEG conversion. An ephemeral profile failed to write Blob
 quotes, and background requests were deliberately blocked and produced recorded load errors.
 These checks do not validate Safari extension APIs, permissions, or native window/focus behavior.
 
-Native Windows testing confirmed that capture can briefly affect focus. Native macOS behavior, Safari extension
+Native Windows testing confirmed that capture can briefly affect focus. In Chrome 155.0.8059.85 on Windows, started
+without user interaction, the window was created normal and focused in every request, and the previous flow saved
+no screenshot. The current build, with a synthetic page, x.com and fb.com, three requests each, saved 9 of 9
+screenshots with Bonjourr in a normal window and 9 of 9 maximized, in 6 to 9 seconds per request. In the maximized
+window, 5 of 9 needed the retry in front, which showed the page for about half a second. Screen recordings of the
+same flow showed the temporary window for about 0.2 seconds when it was minimized after creation and for about
+0.2 seconds when it was restored. Selecting another tab during loading stopped the capture with the expected error. Native macOS behavior, Safari extension
 compatibility, and older browser versions remain unverified. The Firefox 109 manifest minimum has not been
 validated for this feature. Authenticated sites, CAPTCHA, and continuously navigating pages require separate checks.
 

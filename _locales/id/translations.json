@@ -488,6 +488,9 @@
     "Could not change the thumbnail capture setting": "Tidak dapat mengubah pengaturan pengambilan gambar mini",
     "Could not clear thumbnail cache": "Tidak dapat menghapus cache gambar mini",
     "Could not create thumbnail. The previous image or favicon is kept.": "Tidak dapat membuat gambar mini. Gambar sebelumnya atau ikon situs tetap digunakan.",
+    "Could not create thumbnail. Stay on this tab until it is ready.": "Tidak dapat membuat gambar mini. Tetap di tab ini sampai selesai.",
+    "Could not create thumbnail. The website took too long to load.": "Tidak dapat membuat gambar mini. Situs terlalu lama dimuat.",
+    "Could not create thumbnail. The browser did not return a screenshot.": "Tidak dapat membuat gambar mini. Browser tidak mengembalikan tangkapan layar.",
     "Capture opens temporary website windows and may briefly take focus. It requires access to all websites. Images stay on this device and may contain signed-in content. When editing a link, select Thumbnail under Icon, then apply changes.": "Pengambilan gambar membuka jendela situs sementara dan dapat mengambil fokus sesaat. Fitur ini memerlukan akses ke semua situs. Gambar tetap berada di perangkat ini dan mungkin memuat informasi dari sesi yang sudah masuk ke akun. Saat mengedit tautan, pilih «Gambar mini» pada «Ikon», lalu klik «Terapkan perubahan».",
     "Cannot capture this address. Use an HTTP or HTTPS URL without embedded credentials.": "Tidak dapat mengambil gambar dari alamat ini. Gunakan URL HTTP atau HTTPS tanpa kredensial yang disematkan."
 }

@@ -461,6 +461,9 @@
     "Could not change the thumbnail capture setting": "Die Einstellung für die Vorschaubildaufnahme konnte nicht geändert werden",
     "Could not clear thumbnail cache": "Vorschaubild-Cache konnte nicht geleert werden",
     "Could not create thumbnail. The previous image or favicon is kept.": "Vorschaubild konnte nicht erstellt werden. Das bisherige Bild oder Website-Symbol bleibt erhalten.",
+    "Could not create thumbnail. Stay on this tab until it is ready.": "Vorschaubild konnte nicht erstellt werden. Bleiben Sie auf diesem Tab, bis es fertig ist.",
+    "Could not create thumbnail. The website took too long to load.": "Vorschaubild konnte nicht erstellt werden. Das Laden der Website hat zu lange gedauert.",
+    "Could not create thumbnail. The browser did not return a screenshot.": "Vorschaubild konnte nicht erstellt werden. Der Browser hat keinen Screenshot geliefert.",
     "Capture opens temporary website windows and may briefly take focus. It requires access to all websites. Images stay on this device and may contain signed-in content. When editing a link, select Thumbnail under Icon, then apply changes.": "Bei der Aufnahme werden vorübergehend Website-Fenster geöffnet, die kurz den Fokus erhalten können. Dafür ist Zugriff auf alle Websites erforderlich. Die Bilder bleiben auf diesem Gerät und können Inhalte angemeldeter Sitzungen enthalten. Wählen Sie beim Bearbeiten eines Links unter „Symbol“ die Option „Vorschaubild“ und klicken Sie dann auf „Änderungen übernehmen“.",
     "Cannot capture this address. Use an HTTP or HTTPS URL without embedded credentials.": "Diese Adresse kann nicht aufgenommen werden. Verwenden Sie eine HTTP- oder HTTPS-URL ohne eingebettete Zugangsdaten."
 }

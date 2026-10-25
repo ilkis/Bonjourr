@@ -461,6 +461,9 @@
     "Could not change the thumbnail capture setting": "無法度變更翕細張圖的設定",
     "Could not clear thumbnail cache": "無法度清掉細張圖暫存",
     "Could not create thumbnail. The previous image or favicon is kept.": "無法度建立細張圖。原來的圖抑是網站圖示會留咧。",
+    "Could not create thumbnail. Stay on this tab until it is ready.": "無法度建立細張圖。請佇這个分頁等到伊好。",
+    "Could not create thumbnail. The website took too long to load.": "無法度建立細張圖。網站載入傷久矣。",
+    "Could not create thumbnail. The browser did not return a screenshot.": "無法度建立細張圖。瀏覽器無提供螢幕截圖。",
     "Capture opens temporary website windows and may briefly take focus. It requires access to all websites. Images stay on this device and may contain signed-in content. When editing a link, select Thumbnail under Icon, then apply changes.": "翕圖會開網站的暫時視窗，嘛可能暫時共焦點提走。需要存取所有網站的權限。圖會留佇這台裝置，內底可能有登入後的內容。 編輯連結的時陣，佇「圖標」揀「細張圖」，閣按「共所改个用起去」。",
     "Cannot capture this address. Use an HTTP or HTTPS URL without embedded credentials.": "這个網址無法度翕圖。請用無包含登入資料的 HTTP 抑是 HTTPS 網址。"
 }

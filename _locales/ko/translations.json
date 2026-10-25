@@ -461,6 +461,9 @@
     "Could not change the thumbnail capture setting": "썸네일 캡처 설정을 변경할 수 없습니다",
     "Could not clear thumbnail cache": "썸네일 캐시를 지울 수 없습니다",
     "Could not create thumbnail. The previous image or favicon is kept.": "썸네일을 만들 수 없습니다. 이전 이미지 또는 사이트 아이콘이 유지됩니다.",
+    "Could not create thumbnail. Stay on this tab until it is ready.": "썸네일을 만들 수 없습니다. 완료될 때까지 이 탭에 머물러 주세요.",
+    "Could not create thumbnail. The website took too long to load.": "썸네일을 만들 수 없습니다. 웹사이트를 불러오는 데 시간이 너무 오래 걸렸습니다.",
+    "Could not create thumbnail. The browser did not return a screenshot.": "썸네일을 만들 수 없습니다. 브라우저가 스크린샷을 반환하지 않았습니다.",
     "Capture opens temporary website windows and may briefly take focus. It requires access to all websites. Images stay on this device and may contain signed-in content. When editing a link, select Thumbnail under Icon, then apply changes.": "캡처 시 웹사이트의 임시 창이 열리고 잠시 포커스가 이동할 수 있습니다. 모든 웹사이트에 대한 접근 권한이 필요합니다. 이미지는 이 기기에 저장되며 로그인된 계정의 정보가 포함될 수 있습니다. 링크를 편집할 때 «아이콘»에서 «썸네일»을 선택한 다음 «변경 사항 적용»를 클릭하세요.",
     "Cannot capture this address. Use an HTTP or HTTPS URL without embedded credentials.": "이 주소는 캡처할 수 없습니다. 로그인 정보가 포함되지 않은 HTTP 또는 HTTPS URL을 사용하세요."
 }

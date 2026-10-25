@@ -461,6 +461,9 @@
     "Could not change the thumbnail capture setting": "Δεν ήταν δυνατή η αλλαγή της ρύθμισης λήψης μικρογραφιών",
     "Could not clear thumbnail cache": "Δεν ήταν δυνατή η εκκαθάριση της προσωρινής μνήμης μικρογραφιών",
     "Could not create thumbnail. The previous image or favicon is kept.": "Δεν ήταν δυνατή η δημιουργία μικρογραφίας. Διατηρείται η προηγούμενη εικόνα ή το εικονίδιο του ιστοτόπου.",
+    "Could not create thumbnail. Stay on this tab until it is ready.": "Δεν ήταν δυνατή η δημιουργία μικρογραφίας. Παραμείνετε σε αυτή την καρτέλα μέχρι να είναι έτοιμη.",
+    "Could not create thumbnail. The website took too long to load.": "Δεν ήταν δυνατή η δημιουργία μικρογραφίας. Η φόρτωση του ιστοτόπου διήρκεσε πολύ.",
+    "Could not create thumbnail. The browser did not return a screenshot.": "Δεν ήταν δυνατή η δημιουργία μικρογραφίας. Το πρόγραμμα περιήγησης δεν επέστρεψε στιγμιότυπο οθόνης.",
     "Capture opens temporary website windows and may briefly take focus. It requires access to all websites. Images stay on this device and may contain signed-in content. When editing a link, select Thumbnail under Icon, then apply changes.": "Η λήψη ανοίγει προσωρινά παράθυρα ιστοτόπων και ενδέχεται να πάρει για λίγο την εστίαση. Απαιτεί πρόσβαση σε όλους τους ιστοτόπους. Οι εικόνες παραμένουν σε αυτήν τη συσκευή και μπορεί να περιέχουν δεδομένα συνδεδεμένων λογαριασμών. Κατά την επεξεργασία ενός συνδέσμου, επιλέξτε «Μικρογραφία» στο πεδίο «Εικονίδιο» και πατήστε «Εφαρμογή αλλαγών».",
     "Cannot capture this address. Use an HTTP or HTTPS URL without embedded credentials.": "Δεν είναι δυνατή η λήψη αυτής της διεύθυνσης. Χρησιμοποιήστε μια διεύθυνση HTTP ή HTTPS χωρίς ενσωματωμένα διαπιστευτήρια."
 }

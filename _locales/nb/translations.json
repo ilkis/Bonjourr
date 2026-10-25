@@ -461,6 +461,9 @@
     "Could not change the thumbnail capture setting": "Kunne ikke endre innstillingen for skjermbildefangst for miniatyrbilder",
     "Could not clear thumbnail cache": "Kunne ikke tømme hurtigbufferen for miniatyrbilder",
     "Could not create thumbnail. The previous image or favicon is kept.": "Kunne ikke lage miniatyrbildet. Det forrige bildet eller nettstedsikonet beholdes.",
+    "Could not create thumbnail. Stay on this tab until it is ready.": "Kunne ikke lage miniatyrbildet. Bli på denne fanen til det er klart.",
+    "Could not create thumbnail. The website took too long to load.": "Kunne ikke lage miniatyrbildet. Nettstedet brukte for lang tid på å laste inn.",
+    "Could not create thumbnail. The browser did not return a screenshot.": "Kunne ikke lage miniatyrbildet. Nettleseren returnerte ikke et skjermbilde.",
     "Capture opens temporary website windows and may briefly take focus. It requires access to all websites. Images stay on this device and may contain signed-in content. When editing a link, select Thumbnail under Icon, then apply changes.": "Opptak åpner midlertidige nettstedvinduer og kan ta fokus et øyeblikk. Det krever tilgang til alle nettsteder. Bildene blir på denne enheten og kan inneholde informasjon fra innloggede økter. Når du redigerer en lenke, velger du «Miniatyrbilde» under «Ikon» og klikker deretter på «Bruk endringer».",
     "Cannot capture this address. Use an HTTP or HTTPS URL without embedded credentials.": "Kan ikke ta et skjermbilde av denne adressen. Bruk en HTTP- eller HTTPS-adresse uten innebygde påloggingsopplysninger."
 }

@@ -461,6 +461,9 @@
     "Could not change the thumbnail capture setting": "Не ўдалося змяніць наладу стварэння мініяцюр",
     "Could not clear thumbnail cache": "Не ўдалося ачысціць кэш мініяцюр",
     "Could not create thumbnail. The previous image or favicon is kept.": "Не ўдалося стварыць мініяцюру. Захавана папярэдняя выява або значок сайта.",
+    "Could not create thumbnail. Stay on this tab until it is ready.": "Не ўдалося стварыць мініяцюру. Заставайцеся на гэтай укладцы, пакуль яна не будзе гатовая.",
+    "Could not create thumbnail. The website took too long to load.": "Не ўдалося стварыць мініяцюру. Сайт загружаўся занадта доўга.",
+    "Could not create thumbnail. The browser did not return a screenshot.": "Не ўдалося стварыць мініяцюру. Браўзер не вярнуў здымак экрана.",
     "Capture opens temporary website windows and may briefly take focus. It requires access to all websites. Images stay on this device and may contain signed-in content. When editing a link, select Thumbnail under Icon, then apply changes.": "Падчас стварэння здымкаў адкрываюцца часовыя вокны сайтаў, якія могуць ненадоўга перахопліваць фокус. Патрэбны доступ да ўсіх сайтаў. Выявы застаюцца на гэтай прыладзе і могуць змяшчаць даныя карыстальніка, які ўвайшоў ва ўліковы запіс. Пры рэдагаванні спасылкі выберыце «Мініяцюра» у полі «Значок», затым націсніце «Ужыць змены».",
     "Cannot capture this address. Use an HTTP or HTTPS URL without embedded credentials.": "Немагчыма зрабіць здымак гэтага адраса. Выкарыстоўвайце адрас HTTP або HTTPS без убудаваных даных для ўваходу."
 }

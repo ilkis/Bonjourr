@@ -23,6 +23,7 @@ import { randomString, stringMaxSize } from '../../shared/generic.ts'
 import { displayInterface } from '../../shared/display.ts'
 import { getHTMLTemplate } from '../../shared/dom.ts'
 import { eventDebounce } from '../../utils/debounce.ts'
+import { deepEqual } from '../../dependencies/deepequal.ts'
 import { tradThis } from '../../utils/translations.ts'
 import { storage } from '../../storage.ts'
 
@@ -451,6 +452,7 @@ function removeSelectAll(): void {
 
 export async function linksUpdate(update: LinksUpdate): Promise<void> {
     let data = await storage.sync.get()
+    const previousData = structuredClone(data)
 
     if (update.addLinks) {
         data = linkSubmission({ type: 'link', links: update.addLinks }, data)
@@ -523,7 +525,9 @@ export async function linksUpdate(update: LinksUpdate): Promise<void> {
         return
     }
 
-    await storage.sync.set(data)
+    if (!deepEqual(previousData, data)) {
+        await storage.sync.set(data)
+    }
     if (
         update.updateLink && thumbnailsEnabled() && data.linkstyle !== 'text' &&
         update.updateLink.thumbnail?.type === 'capture'

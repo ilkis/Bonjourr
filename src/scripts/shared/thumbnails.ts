@@ -12,6 +12,8 @@ export interface ThumbnailRecord {
     updated: number
 }
 
+export const THUMBNAIL_TAB_LEFT = 'The Bonjourr tab was left before the thumbnail was ready'
+
 const DATABASE = 'bonjourr-thumbnails'
 const STORE = 'images'
 const MAX_IMAGES = 100

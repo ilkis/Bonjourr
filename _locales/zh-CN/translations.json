@@ -461,6 +461,9 @@
     "Could not change the thumbnail capture setting": "无法更改缩略图截取设置",
     "Could not clear thumbnail cache": "无法清空缩略图缓存",
     "Could not create thumbnail. The previous image or favicon is kept.": "无法创建缩略图。将保留之前的图片或网站图标。",
+    "Could not create thumbnail. Stay on this tab until it is ready.": "无法创建缩略图。请停留在此标签页，直到缩略图完成。",
+    "Could not create thumbnail. The website took too long to load.": "无法创建缩略图。网站加载时间过长。",
+    "Could not create thumbnail. The browser did not return a screenshot.": "无法创建缩略图。浏览器未返回屏幕截图。",
     "Capture opens temporary website windows and may briefly take focus. It requires access to all websites. Images stay on this device and may contain signed-in content. When editing a link, select Thumbnail under Icon, then apply changes.": "截取时会打开网站的临时窗口，并可能短暂获得焦点。此功能需要访问所有网站的权限。图片保存在此设备上，可能包含已登录账户的信息。编辑链接时，请在“图标”中选择“缩略图”，然后点击“保存更改”。",
     "Cannot capture this address. Use an HTTP or HTTPS URL without embedded credentials.": "无法截取此地址。请使用不含嵌入式登录凭据的 HTTP 或 HTTPS URL。"
 }
