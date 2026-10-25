@@ -84,15 +84,18 @@ The current implementation passed 30 tests with 106 test steps, formatting, and 
 for Chrome, Edge, Firefox, and online. The regression suite includes clearing the cache during a pending refresh;
 an obsolete display operation cannot restore the deleted thumbnail or overwrite a newer operation's status.
 
-Linux Docker integration passed in Chrome 156.0.8078.47, Edge 155.0.4283.62, and Firefox 158.0.1. Tests cover
-capture and decoded image pixels, refresh through Apply changes, cached reload, cancellation, ordinary favicon,
-file and URL compatibility, all five styles, opt-out, and temporary-window cleanup. Focus changed transiently
-in each browser and returned to the original window. Fully invisible capture is not established.
+Linux Docker integration of the current build passed in Chrome 156.0.8078.47, Edge 155.0.4283.62, and Firefox
+158.0.1. Tests cover capture and decoded image pixels, refresh through Apply changes, cached reload, cancellation,
+ordinary favicon, file and URL compatibility, all five styles, opt-out, and temporary-window cleanup. Selecting
+another window or tab during capture stopped it with the tab-left error and kept the previous image. After Apply
+changes and a switch to another tab, no image was saved while away; the capture was retried on return and saved
+in 4 to 5 seconds without an error message. Focus changed transiently in each browser and returned to the original
+window. Fully invisible capture is not established.
 
 Integration used isolated profiles and synthetic loopback pages. Test copies received a mandatory host grant;
 shipped manifests retain optional access. Actual permission dialogs were not exercised.
 
-WebKit 26.5 checks passed in a persistent Linux profile using the online build with a private test hook to enable
+WebKit 26.5 checks of the current build passed in a persistent Linux profile using the online build with a private test hook to enable
 cached thumbnail display. Checks cover card dimensions, backgrounds, frames, help animation, cache clearing,
 status dismissal, and JPEG conversion. An ephemeral profile failed to write Blob images to IndexedDB with
 `Error preparing Blob/File data to be stored in object store`; the persistent profile passed. External weather,
