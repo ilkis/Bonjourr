@@ -3,7 +3,9 @@
 The **Thumbnail** switch in Quick Links settings controls thumbnail display and local capture on this device.
 Click the **?** next to it to expand the capture explanation and **Clear thumbnail cache** button.
 The block uses the standard 0.3-second dropdown transition with a measured height that follows text wrapping.
-Cache-clear feedback appears beside the button inside the explanation. Other errors appear below the setting and in the link editor. Messages disappear after five seconds with a short fade.
+Cache-clear feedback appears beside the button inside the explanation. Capture errors appear below the setting and
+on the link card. Messages disappear five seconds after they become visible, with a short fade; while the settings
+are closed, the message waits under the setting.
 The **Style** selector keeps the existing Large, Medium, Small, Inline and Text choices. Thumbnail cards follow
 the selected size; Text remains text-only. Existing links initially show their icons. In the link editor,
 use **Icon → Thumbnail → Apply changes** to request a new local screenshot, even if a cached screenshot exists.
@@ -33,8 +35,13 @@ three seconds, it checks the saved link and requesting tab again. If the user se
 original window, capture stops before restoring the temporary window.
 
 When capture stops because the user left, the Bonjourr page waits until its tab is visible and focused again and
-then retries. It gives up after three attempts. Other failures show a specific reason when one is known: the website
-took too long to load, or the browser did not return a screenshot.
+then retries. It gives up after three attempts and asks the user to stay on the tab. Other failures show a specific
+reason when one is known: the website took too long to load, or the browser did not return a screenshot.
+
+The link editor closes on Apply changes, before capture finishes, so the editor does not show the result. The reason
+appears under the Thumbnail switch and on the link card: for about five seconds the card turns the danger color and
+shows the reason as its tooltip. Cards with the white frame recolor that frame; other cards get an outline. The mark
+clears when the card is displayed or refreshed again.
 
 The script restores the window with `focused: false`, preserving the browser-selected size and position. Changing
 the viewport during restoration could leave screenshot readback pending on complex pages such as `x.com`.
@@ -80,7 +87,7 @@ Disabling backgrounds removes the frame and glass. Ordinary links retain their s
 
 ## Validation
 
-The current implementation passed 30 tests with 106 test steps, formatting, and type checks. Builds completed
+The current implementation passed 30 tests with 107 test steps, formatting, and type checks. Builds completed
 for Chrome, Edge, Firefox, and online. The regression suite includes clearing the cache during a pending refresh;
 an obsolete display operation cannot restore the deleted thumbnail or overwrite a newer operation's status.
 
@@ -89,14 +96,15 @@ Linux Docker integration of the current build passed in Chrome 156.0.8078.47, Ed
 ordinary favicon, file and URL compatibility, all five styles, opt-out, and temporary-window cleanup. Selecting
 another window or tab during capture stopped it with the tab-left error and kept the previous image. After Apply
 changes and a switch to another tab, no image was saved while away; the capture was retried on return and saved
-in 4 to 5 seconds without an error message. Focus changed transiently in each browser and returned to the original
-window. Fully invisible capture is not established.
+in 4 to 5 seconds without an error message. In Chrome, a failed capture with the settings closed recolored the card
+frame to the danger color with the reason as its tooltip, and both cleared after about six seconds. Focus changed
+transiently in each browser and returned to the original window. Fully invisible capture is not established.
 
 Integration used isolated profiles and synthetic loopback pages. Test copies received a mandatory host grant;
 shipped manifests retain optional access. Actual permission dialogs were not exercised.
 
-WebKit 26.5 checks of the current build passed in a persistent Linux profile using the online build with a private test hook to enable
-cached thumbnail display. Checks cover card dimensions, backgrounds, frames, help animation, cache clearing,
+WebKit 26.5 checks of the current build passed in a persistent Linux profile using the online build with a private
+test hook to enable cached thumbnail display. Checks cover card dimensions, backgrounds, frames, help animation, cache clearing,
 status dismissal, and JPEG conversion. An ephemeral profile failed to write Blob images to IndexedDB with
 `Error preparing Blob/File data to be stored in object store`; the persistent profile passed. External weather,
 quotes, and background requests were deliberately blocked and produced recorded load errors.

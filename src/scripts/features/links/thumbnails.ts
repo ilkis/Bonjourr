@@ -213,6 +213,7 @@ export async function displayThumbnail(
     image.src = fallback
     image.closest('li')?.removeAttribute('aria-busy')
     image.closest('li')?.removeAttribute('data-thumbnail-source')
+    thumbnailCardError(image, '')
     const source = link.thumbnail
     if (source?.type !== 'capture') return
     image.closest('li')?.setAttribute('data-thumbnail-source', 'capture')
@@ -242,15 +243,17 @@ export async function displayThumbnail(
         if (imageUpdates.get(image) === update && image.isConnected && image.dataset.thumbnailKey === key) {
             console.warn('Thumbnail capture failed', error)
             const reason = error instanceof Error ? error.message : ''
+            let message: typeof thumbnailMessages[number] =
+                'Could not create thumbnail. The previous image or favicon is kept.'
             if (reason === THUMBNAIL_TAB_LEFT) {
-                thumbnailStatus('Could not create thumbnail. Stay on this tab until it is ready.')
+                message = 'Could not create thumbnail. Stay on this tab until it is ready.'
             } else if (reason === THUMBNAIL_LOAD_TIMEOUT) {
-                thumbnailStatus('Could not create thumbnail. The website took too long to load.')
+                message = 'Could not create thumbnail. The website took too long to load.'
             } else if (reason === THUMBNAIL_NO_SCREENSHOT || reason.includes('image readback failed')) {
-                thumbnailStatus('Could not create thumbnail. The browser did not return a screenshot.')
-            } else {
-                thumbnailStatus('Could not create thumbnail. The previous image or favicon is kept.')
+                message = 'Could not create thumbnail. The browser did not return a screenshot.'
             }
+            thumbnailStatus(message)
+            thumbnailCardError(image, message)
         }
     } finally {
         const current = imageUpdates.get(image) === update && image.isConnected && image.dataset.thumbnailKey === key
@@ -263,6 +266,28 @@ export async function displayThumbnail(
             image.dataset.thumbnail = 'true'
         }
         if (current) image.closest('li')?.removeAttribute('aria-busy')
+    }
+}
+
+function thumbnailCardError(image: HTMLImageElement, message: typeof thumbnailMessages[number] | ''): void {
+    const li = image.closest('li')
+    const icon = image.closest<HTMLElement>('.link-icon')
+    if (!li || !icon) return
+    if (!message) {
+        li.removeAttribute('data-thumbnail-error')
+        icon.removeAttribute('title')
+        icon.onanimationend = null
+        return
+    }
+    li.removeAttribute('data-thumbnail-error')
+    void icon.offsetWidth
+    li.setAttribute('data-thumbnail-error', '')
+    icon.title = tradThis(message)
+    icon.onanimationend = (event) => {
+        if (event.target !== icon || !['thumbnail-error-fade', 'thumbnail-error-frame'].includes(event.animationName)) {
+            return
+        }
+        thumbnailCardError(image, '')
     }
 }
 

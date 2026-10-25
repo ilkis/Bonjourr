@@ -79,6 +79,10 @@ See [Thumbnail documentation](../docs/THUMBNAILS.md) for expected behavior and p
 - Enable Thumbnail: grant access, deny access, and retry after denying
 - Revoke website access and check that capture fails without losing the previous image
 - Select Icon → Thumbnail → Apply changes and verify that the image updates
+- Apply changes, then switch tabs while it loads: capture retries on return; after three departures the message asks to
+  stay on the tab
+- With settings closed, make a capture fail: the link card turns red for about five seconds and its tooltip shows the
+  reason
 - Open a new Bonjourr tab and change link styles: cached images appear without opening websites
 - Disable and re-enable Thumbnail: cached images are retained
 - Clear thumbnail cache, including during a capture: images are removed and pending captures are cancelled

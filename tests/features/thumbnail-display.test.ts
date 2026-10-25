@@ -61,10 +61,13 @@ Deno.test('Saving requests a fresh thumbnail while ordinary display uses the cac
     }
     URL.revokeObjectURL = () => {}
     const item = document.createElement('li')
+    const icon = document.createElement('div')
     const image = document.createElement('img')
     const status = document.createElement('p')
     status.id = 'thumbnail-edit-status'
-    item.append(image)
+    icon.className = 'link-icon'
+    icon.append(image)
+    item.append(icon)
     document.body.replaceChildren(item, status)
     let visible = true
     const originalHasFocus = document.hasFocus
@@ -169,7 +172,27 @@ Deno.test('Saving requests a fresh thumbnail while ordinary display uses the cac
                 chrome.runtime.sendMessage = (() => Promise.resolve({ error })) as typeof chrome.runtime.sendMessage
                 await displayThumbnail(image, link, 'favicon.png', true)
                 assertEquals(status.textContent, message)
+                assertEquals(item.hasAttribute('data-thumbnail-error'), true)
+                assertEquals(icon.title, message)
             }
+        })
+        await test.step('The card error mark clears after its fade and on the next update', async () => {
+            const fade = Object.assign(new Event('animationend'), { animationName: 'thumbnail-error-fade' })
+            icon.dispatchEvent(fade)
+            assertEquals(item.hasAttribute('data-thumbnail-error'), false)
+            assertEquals(icon.hasAttribute('title'), false)
+            chrome.runtime.sendMessage = (() =>
+                Promise.resolve({ error: 'Capture failed' })) as typeof chrome.runtime.sendMessage
+            await displayThumbnail(image, link, 'favicon.png', true)
+            assertEquals(item.hasAttribute('data-thumbnail-error'), true)
+            const frame = Object.assign(new Event('animationend'), { animationName: 'thumbnail-error-frame' })
+            icon.dispatchEvent(frame)
+            assertEquals(item.hasAttribute('data-thumbnail-error'), false)
+            await displayThumbnail(image, link, 'favicon.png', true)
+            assertEquals(item.hasAttribute('data-thumbnail-error'), true)
+            await displayThumbnail(image, link, 'favicon.png')
+            assertEquals(item.hasAttribute('data-thumbnail-error'), false)
+            assertEquals(icon.hasAttribute('title'), false)
         })
         await test.step('Clearing cache during pending refresh must keep fallback', async () => {
             let release!: () => void
